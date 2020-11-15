@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Comic {
+public class Comic implements Comparable<Comic> {
     private String pictureUrl;
 
     private String title;
@@ -20,4 +20,8 @@ public class Comic {
     private String browserViewUrl;
 
     private LocalDate publishingDate;
+
+    @Override public int compareTo(Comic c) {
+        return this.publishingDate.compareTo(c.getPublishingDate());
+    }
 }
