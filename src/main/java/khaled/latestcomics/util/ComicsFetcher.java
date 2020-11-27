@@ -47,30 +47,12 @@ public class ComicsFetcher {
     }
 
     public Integer getLatestComicNumber() {
+        log.info("reading json file from xkcd for the latest comic");
         try {
             URL currentComicURL = new URL(Constants.XKCD_CURRENT_COMIC_URL);
             JSONTokener tokener = new JSONTokener(currentComicURL.openStream());
             JSONObject comicJsonObj = new JSONObject(tokener);
             return comicJsonObj.getInt("num");
-        } catch (IOException | JSONException e) {
-            log.error(e.getMessage());
-        }
-        return null;
-    }
-
-    public Comic getComicFromXKCD(Integer comicNum) {
-        try {
-            URL currentComicURL = new URL("https://xkcd.com/" + comicNum + "/info.0.json");
-            JSONTokener tokener = new JSONTokener(currentComicURL.openStream());
-            JSONObject comicJsonObj = new JSONObject(tokener);
-            String comicTitle = comicJsonObj.getString("title");
-            String comicViewUrl = comicJsonObj.getString("link");
-            String comicPicUrl = comicJsonObj.getString("img");
-            Integer comicYear = Integer.parseInt(comicJsonObj.getString("year"));
-            Integer comicMonth = Integer.parseInt(comicJsonObj.getString("month"));
-            Integer comicDayOfMonth = Integer.parseInt(comicJsonObj.getString("day"));
-            LocalDate comicPublishingDate = LocalDate.of(comicYear, comicMonth, comicDayOfMonth);
-            return new Comic(comicPicUrl, comicTitle, comicViewUrl, comicPublishingDate);
         } catch (IOException | JSONException e) {
             log.error(e.getMessage());
         }

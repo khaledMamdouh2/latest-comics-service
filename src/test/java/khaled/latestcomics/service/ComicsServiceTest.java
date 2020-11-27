@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -27,7 +28,7 @@ public class ComicsServiceTest {
 
     @DisplayName("checking that comics list is correct")
     @Test
-    public void getLatestComicsTest() {
+    public void getLatestComicsTest() throws ExecutionException, InterruptedException {
         assertThat(comicsService).isNotNull();
         List<Comic> comics = comicsService.getLatestComics();
         assertThat(comics).isNotNull();

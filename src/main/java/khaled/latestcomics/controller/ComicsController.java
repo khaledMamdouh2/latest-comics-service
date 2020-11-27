@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author Khaled
@@ -23,6 +24,11 @@ public class ComicsController {
 
     @GetMapping("/getLatestComics")
     List<Comic> getLatestComics() {
-        return comicsService.getLatestComics();
+        try {
+            return comicsService.getLatestComics();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
