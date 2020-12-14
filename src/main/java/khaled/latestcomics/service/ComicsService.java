@@ -32,6 +32,7 @@ public class ComicsService {
 
     public List<Comic> getLatestComics() throws ExecutionException, InterruptedException {
         List<Comic> comics = comicsFetcher.parseComicsFromRss();
+        log.debug("comics returned from RSS: " + comics);
         //now we will start with the xkcd comics
         Integer latestComicNumber = comicsFetcher.getLatestComicNumber();
         if (latestComicNumber != null) {
@@ -44,7 +45,9 @@ public class ComicsService {
             for (Future<Comic> futureComic : futureComicsList) {
                 comics.add(futureComic.get());
             }
+            log.debug("unsorted comics: " + comics);
             Collections.sort(comics, Collections.reverseOrder());
+            log.debug("comics after being sorted: " + comics);
         }
         return comics;
     }
